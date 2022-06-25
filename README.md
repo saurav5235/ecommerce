@@ -1,10 +1,7 @@
 **SMART CONTRACT FOR ECOMMERCE**
 
-    // SPDX-License-Identifier: GPL-3.0
-    pragma solidity >=0.7.0 <0.9.0;
+Structure of the Contract
 
-    contract Ecommerce
-    {
         struct product
         {
             string productName;
@@ -15,14 +12,8 @@
             address buyer;
             bool isDelivered;
         }
-
-        event registered(string productName,uint productId,address seller);
-        event bought(uint productId,address buyer);
-        event delivered(uint productId);
-
-        uint count = 1;
-
-        product[] public products;
+        
+Function to Register the Product
 
         function registerProduct(string memory _productName,string memory _description,uint _price) public
         {
@@ -37,6 +28,9 @@
             count++;
             emit registered(_productName,productDetails.productId,msg.sender);
         }
+![Screenshot 2022-06-25 at 5 52 26 PM](https://user-images.githubusercontent.com/90019413/175773301-fdb13dfc-f2a5-4ff0-b593-bf5d30e4a60c.png) 
+
+Function for buyer to buy the product
 
         function buy(uint _productId) payable public 
         {
@@ -45,6 +39,8 @@
             products[_productId-1].buyer = msg.sender;
             emit bought(_productId,msg.sender);
         }
+        
+Function fot confirming the delivery
 
         function delivery(uint _productId) public
         {
@@ -53,4 +49,3 @@
             products[_productId-1].seller.transfer(products[_productId-1].price);
             emit delivered(_productId);
         }
-    }
